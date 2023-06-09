@@ -74,6 +74,37 @@ app.get('/books/:id', (req, res) => {
         const book = data[0];
         res.render('book', { book });
     });
+});
+
+app.get('/books/edit/:id', (req, res) => {
+    const { id } = req.params;
+
+    const sql = `SELECT * FROM books WHERE id = ${id}`;
+
+    conn.query(sql, (err, data) => {
+        if(err) {
+            return console.log(err);
+        };
+
+        const book = data[0];
+        console.log('book', book);
+        res.render('editbook', { book });
+    });
+
+});
+
+app.post('/books/updatebook', (req, res) => {
+    const { id, title, pageqty } = req.body;
+
+    const sqlQuery = `UPDATE books SET title = ${title}, pageqty = ${pageqty} WHERE id = ${{id}}`;
+
+    conn.query(sqlQuery, (err) => {
+        if(err) {
+            return console.log(err);
+        };
+
+        res.render('/books');
+    })
 })
 
 const conn = mysql.createConnection({
