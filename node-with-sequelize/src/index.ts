@@ -10,6 +10,7 @@ app.use(router);
 (async () => {
     //Models
     const Users = require('./app/models/User');
+    const Address =  require('./app/models/Address');
 
     await sequelize.sync();
 
